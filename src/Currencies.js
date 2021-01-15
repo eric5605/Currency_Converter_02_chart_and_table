@@ -1,7 +1,6 @@
-
 import React from 'react';
+import Chart from "chart.js";
 import './App.css';
-import CurrencyChart from './CurrencyChart'
 
 class Currencies extends React.Component {
   constructor() {
@@ -38,10 +37,34 @@ class Currencies extends React.Component {
       fetch(apiHistoric)
        .then(results => {
           return results.json();
-      }).then(data => this.setState({
-        historicData: Object.values(data['rates']),
-        pastDates: Object.keys(data['rates']),
-      }));
+      }).then(data => {
+        this.setState({
+          historicData: Object.values(data['rates']),
+          pastDates: Object.keys(data['rates']),
+        });
+        const ctx = document.getElementById("myChart");
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: Object.keys(data['rates']),
+            datasets: [
+              {
+                label: `Rates Last 30 Days: ${baseCurrency}/${convertToCurrency}`,
+                data: this.getPastRates(Object.values(data['rates'])),
+                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                borderColor: "rgba(255, 99, 132, 1)",
+                borderWidth: 2,
+                fill: false,
+                lineTension: 0
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+          }
+        });
+      });
   }
 
   callAPI(base) {
@@ -106,10 +129,10 @@ class Currencies extends React.Component {
      return(
        <div className="container-fluid w-75 text-center converter">
          <div className="row">
-           <div className="col-sm-4 pt-5">
+           <div className="col-sm-4 pt-4">
              <form className='form main'>
 
-            <div className="py-4">
+            <div className="py-3">
               <h3>Convert from: {baseCurrency}</h3>
                <select
                   value={baseCurrency}
@@ -138,18 +161,13 @@ class Currencies extends React.Component {
         </div>
           <hr />
 
-            <div className="col-sm-8">
-                <div className="pt-5">
-                   <CurrencyChart
-                     pastDates={pastDates}
-                     historicRates={historicRates}
-                     baseCurrency={baseCurrency}
-                     compareCurrency={convertToCurrency}
-                  />
-                 </div>
+            <div className="col-sm-8 pt-4">
+              <div className="container-fluid chart-container">
+                <canvas id="myChart"/>
+              </div>
             </div>
 
-            <div className="col-sm-12 mx-auto pt-5">
+            <div className="col-sm-12 mx-auto pt-4">
                <h5 className="currency-list currency-table">Exchange Rates Table</h5>
                  <table className="table table-striped table-custom">
                    <thead>

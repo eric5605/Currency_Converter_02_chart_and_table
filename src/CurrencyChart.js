@@ -1,7 +1,7 @@
-
 import React, { useEffect } from "react";
 import Chart from "chart.js";
 import './index.css'
+
 
 const CurrencyChart = (props) => {
   useEffect(() => {
