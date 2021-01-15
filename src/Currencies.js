@@ -106,7 +106,7 @@ class Currencies extends React.Component {
      return(
        <div className="container-fluid w-75 text-center converter">
          <div className="row">
-           <div className="col-sm-5 pt-2">
+           <div className="col-sm-4 pt-5">
              <form className='form main'>
 
             <div className="py-4">
@@ -138,8 +138,8 @@ class Currencies extends React.Component {
         </div>
           <hr />
 
-            <div className="col-sm-7">
-                <div>
+            <div className="col-sm-8">
+                <div className="pt-5">
                    <CurrencyChart
                      pastDates={pastDates}
                      historicRates={historicRates}
