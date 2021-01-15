@@ -1,14 +1,13 @@
+
 import React, { useEffect } from "react";
 import Chart from "chart.js";
 import './index.css'
-
 
 const CurrencyChart = (props) => {
   useEffect(() => {
     const ctx = document.getElementById("myChart");
     new Chart(ctx, {
       type: "line",
-      // responsive: true,
       data: {
         labels: props.pastDates,
         datasets: [
@@ -38,7 +37,3 @@ const CurrencyChart = (props) => {
 }
 
 export default CurrencyChart
-// options = {
-//   responsive: true,
-//   maintainAspectRatio: false
-// };
